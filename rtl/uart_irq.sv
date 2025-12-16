@@ -45,10 +45,10 @@ module uart_irq #(
   always_comb begin
     s_trg_level_done = 1'b0;
     unique case (trg_level_i)
-      2'b00:   if (rx_elem_i == 4'd1) s_trg_level_done = 1'b1;
-      2'b01:   if (rx_elem_i == 4'd2) s_trg_level_done = 1'b1;
-      2'b10:   if (rx_elem_i == 4'd8) s_trg_level_done = 1'b1;
-      2'b11:   if (rx_elem_i == 4'd14) s_trg_level_done = 1'b1;
+      2'b00:   if (rx_elem_i == 6'd1) s_trg_level_done = 1'b1;
+      2'b01:   if (rx_elem_i == 6'd2) s_trg_level_done = 1'b1;
+      2'b10:   if (rx_elem_i == 6'd8) s_trg_level_done = 1'b1;
+      2'b11:   if (rx_elem_i == 6'd14) s_trg_level_done = 1'b1;
       default: s_trg_level_done = 1'b0;
     endcase
   end
