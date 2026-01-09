@@ -84,7 +84,7 @@ module apb4_uart #(
 
   assign s_uart_div_en = s_apb4_wr_hdshk && s_apb4_addr == `UART_DIV;
   assign s_uart_div_d  = apb4.pwdata[`UART_DIV_WIDTH-1:0];
-  dfferc #(`UART_DIV_WIDTH, logic [`UART_DIV_WIDTH-1:0], `UART_DIV_MIN_VAL) u_uart_div_dfferc (
+  dfferc #(`UART_DIV_WIDTH, `UART_DIV_MIN_VAL) u_uart_div_dfferc (
       apb4.pclk,
       apb4.presetn,
       s_uart_div_en,
