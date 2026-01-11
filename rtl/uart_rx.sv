@@ -104,10 +104,10 @@ module uart_rx (
         if (s_bit_done) begin
           s_sample_data = 1'b1;
           if (s_reg_bit_cnt_q == s_target_bits) begin
-            s_reg_bit_cnt_d = 'h0;
+            s_reg_bit_cnt_d = '0;
             s_fsm_d         = SAVE_DATA;
           end else begin
-            s_reg_bit_cnt_d = s_reg_bit_cnt_q + 1;
+            s_reg_bit_cnt_d = s_reg_bit_cnt_q + 3'd1;
           end
         end
       end
@@ -144,8 +144,8 @@ module uart_rx (
     if (~rst_n_i) begin
       s_fsm_q         <= IDLE;
       s_reg_data_q    <= 8'hFF;
-      s_reg_bit_cnt_q <= 'h0;
-      s_parity_bit_q  <= 1'b0;
+      s_reg_bit_cnt_q <= '0;
+      s_parity_bit_q  <= '0;
     end else begin
       if (s_bit_done) begin
         s_parity_bit_q <= s_parity_bit_d;
@@ -172,22 +172,22 @@ module uart_rx (
 
   always_ff @(posedge clk_i or negedge rst_n_i) begin
     if (~rst_n_i) begin
-      s_baud_cnt <= 'h0;
+      s_baud_cnt <= '0;
       s_bit_done <= 1'b0;
     end else begin
       if (s_baudgen_en) begin
         if (!s_start_bit && (s_baud_cnt == cfg_div_i)) begin
-          s_baud_cnt <= 'h0;
+          s_baud_cnt <= '0;
           s_bit_done <= 1'b1;
         end else if (s_start_bit && (s_baud_cnt == {1'b0, cfg_div_i[15:1]})) begin
-          s_baud_cnt <= 'h0;
+          s_baud_cnt <= '0;
           s_bit_done <= 1'b1;
         end else begin
-          s_baud_cnt <= s_baud_cnt + 1;
+          s_baud_cnt <= s_baud_cnt + 16'd1;
           s_bit_done <= 1'b0;
         end
       end else begin
-        s_baud_cnt <= 'h0;
+        s_baud_cnt <= '0;
         s_bit_done <= 1'b0;
       end
     end

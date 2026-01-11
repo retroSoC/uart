@@ -95,14 +95,14 @@ module uart_tx (
         s_parity_bit_d = s_parity_bit_q ^ s_reg_data_q[0];
         if (s_bit_done) begin
           if (s_reg_bit_cnt_q == s_target_bits) begin
-            s_reg_bit_cnt_d = 'h0;
+            s_reg_bit_cnt_d = '0;
             if (cfg_parity_en_i) begin
               s_fsm_d = PARITY;
             end else begin
               s_fsm_d = STOP_BIT_FIRST;
             end
           end else begin
-            s_reg_bit_cnt_d = s_reg_bit_cnt_q + 1;
+            s_reg_bit_cnt_d = s_reg_bit_cnt_q + 3'd1;
             s_sample_data   = 1'b1;
           end
         end
@@ -141,8 +141,8 @@ module uart_tx (
     if (~rst_n_i) begin
       s_fsm_q         <= IDLE;
       s_reg_data_q    <= 8'hFF;
-      s_reg_bit_cnt_q <= 'h0;
-      s_parity_bit_q  <= 1'b0;
+      s_reg_bit_cnt_q <= '0;
+      s_parity_bit_q  <= '0;
     end else begin
       if (s_bit_done) begin
         s_parity_bit_q <= s_parity_bit_d;
@@ -160,19 +160,19 @@ module uart_tx (
 
   always_ff @(posedge clk_i, negedge rst_n_i) begin
     if (~rst_n_i) begin
-      baud_cnt   <= 'h0;
+      baud_cnt   <= '0;
       s_bit_done <= 1'b0;
     end else begin
       if (s_baudgen_en) begin
         if (baud_cnt == cfg_div_i) begin
-          baud_cnt   <= 'h0;
+          baud_cnt   <= '0;
           s_bit_done <= 1'b1;
         end else begin
-          baud_cnt   <= baud_cnt + 1;
+          baud_cnt   <= baud_cnt + 16'd1;
           s_bit_done <= 1'b0;
         end
       end else begin
-        baud_cnt   <= 'h0;
+        baud_cnt   <= '0;
         s_bit_done <= 1'b0;
       end
     end
