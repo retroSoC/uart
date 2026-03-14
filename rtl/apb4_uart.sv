@@ -169,7 +169,7 @@ module apb4_uart #(
   uart_tx u_uart_tx (
       .clk_i           (apb4.pclk),
       .rst_n_i         (apb4.presetn),
-      .tx_o            (uart.uart_tx_o),
+      .tx_o            (uart.tx_o),
       .busy_o          (),
       .cfg_en_i        (1'b1),
       .cfg_div_i       (s_uart_div_q[`UART_DIV_WIDTH-1:0]),
@@ -203,7 +203,7 @@ module apb4_uart #(
   uart_rx u_uart_rx (
       .clk_i           (apb4.pclk),
       .rst_n_i         (apb4.presetn),
-      .rx_i            (uart.uart_rx_i),
+      .rx_i            (uart.rx_i),
       .busy_o          (),
       .cfg_en_i        (1'b1),
       .cfg_div_i       (s_uart_div_q[`UART_DIV_WIDTH-1:0]),

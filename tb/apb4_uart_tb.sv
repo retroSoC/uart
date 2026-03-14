@@ -55,8 +55,8 @@ module apb4_uart_tb ();
   );
 
   rs232 #(115200, 0) u_rs232 (
-      .rs232_rx_i(u_uart_if.uart_tx_o),
-      .rs232_tx_o(u_uart_if.uart_rx_i)
+      .rs232_rx_i(u_uart_if.tx_o),
+      .rs232_tx_o(u_uart_if.rx_i)
   );
 
 endmodule
